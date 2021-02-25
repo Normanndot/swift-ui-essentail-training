@@ -16,6 +16,18 @@ struct Landmark: Hashable, Codable, Identifiable {
     var state: String
     var description: String
     var isFavorite: Bool
+    var isFeatured: Bool
+
+    var featureImage: Image? {
+        isFeatured ? Image(imageName + "_feature") : nil
+    }
+
+    var category: Category
+    enum Category: String, CaseIterable, Codable {
+        case lakes = "Lakes"
+        case rivers = "Rivers"
+        case mountains = "Mountains"
+    }
 
     private var imageName: String
     var image: Image {
@@ -32,5 +44,23 @@ struct Landmark: Hashable, Codable, Identifiable {
     struct Coordinates: Hashable, Codable {
         var latitude: Double
         var longitude: Double
+    }
+}
+
+struct Profile {
+    var username: String
+    var prefersNotifications = true
+    var seasonalPhoto = Season.winter
+    var goalDate = Date()
+
+    static let `default` = Profile(username: "g_kumar")
+
+    enum Season: String, CaseIterable, Identifiable {
+        case spring = "🌷"
+        case summer = "🌞"
+        case autumn = "🍂"
+        case winter = "☃️"
+
+        var id: String { self.rawValue }
     }
 }
